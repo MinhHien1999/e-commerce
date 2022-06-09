@@ -107,21 +107,37 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
-//        $request->validate([
-//            'title'=>'bail|required|string',
-//            'image' => 'bail|mimes:jpeg,bmp,png',
-//            'description'=>'bail|string|nullable',
-//            'price' => 'bail|required|min:0',
-//            'cat_id'=>'bail|required|exists:categories,id',
-//            'brand_id'=>'bail|nullable|exists:brands,id',
-//            'child_cat_id'=>'bail|nullable|exists:categories,id',
-//            'status'=>'bail|required|in:active,inactive',
-//            'price'=>'bail|required|numeric',
-//            'discount'=>'bail|nullable|numeric'
-//        ]);
-
+        $request->validate([
+            'title'=>'bail|required|string',
+            'image' => 'bail|mimes:jpeg,bmp,png',
+            'description'=>'bail|string|nullable',
+            'price' => 'bail|required|min:0',
+            'cat_id'=>'bail|required|exists:categories,id',
+            'brand_id'=>'bail|nullable|exists:brands,id',
+            'child_cat_id'=>'bail|nullable|exists:categories,id',
+            'status'=>'bail|required|in:active,inactive',
+            'price'=>'bail|required|numeric',
+            'discount'=>'bail|nullable|numeric'
+        ]);
+//        dd(empty($request->child_cat_id));
         $data = $request->all();
         $product = Product::find($id);
+        $cat_child_id = Category::where('parent_id', $request->cat_id)->get();
+//        dd($cat_id);
+        if(empty($request->child_cat_id))
+            $data['child_cat_id'] = null;
+        if(count($cat_child_id) == 0){
+            $data['child_cat_id'] = null;
+        }else{
+             foreach ($cat_child_id as $key => $value) {
+                 if ($value->id == $request->child_cat_id) {
+                     $data['child_cat_id'] = $request->child_cat_id;
+                     break;
+                 }else{
+                    $data['child_cat_id'] = null;
+                 }
+             }
+        }
 
         if($request->hasFile('image')){
             $newImageName = time() . '-' . $request->image->getClientOriginalName();
