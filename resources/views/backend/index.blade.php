@@ -1,7 +1,9 @@
 @extends('backend.layouts.master')
 @section('title','Admin')
 @section('content')
-
+{{--@php--}}
+{{--    dd(session('user')->name)--}}
+{{--@endphp--}}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">

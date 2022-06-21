@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('quantity')->default(1);
+            $table->integer('stock')->default(1);
             $table->float('price')->default(0);
             $table->string('slug');
             $table->text('image');
@@ -31,6 +31,7 @@ class CreateProductsTable extends Migration
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('SET NULL');
             $table->foreign('child_cat_id')->references('id')->on('categories')->onDelete('SET NULL');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

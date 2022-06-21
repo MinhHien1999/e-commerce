@@ -4,13 +4,15 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Banner extends Model
 {
     use Sluggable;
-    
+    use SoftDeletes;
+
     public $timestamps = true;
-    
+
     protected $fillable = [
         'title', 'slug', 'description', 'image','status'
     ];

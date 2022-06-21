@@ -20,6 +20,7 @@ class CreateBrandsTable extends Migration
             $table->text('image');
             $table->enum('status',['active','inactive'])->default('inactive');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

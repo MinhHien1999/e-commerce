@@ -72,12 +72,58 @@
                         <i class="fas fa-trash-alt">
                         </i>
                       </a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-default-{{$brand->id}}" id="brandID-{{$brand->id}}" value="{{$brand->id}}">
+                            <i class="fas fa-eye">
+                            </i>
+                        </a>
                         <form method="post" action="{{route('brand.destroy',$brand->id)}}" enctype="multipart/form-data" name="deleteBrand" id="delete-{{$brand->id}}">
                           @method('delete')
                           @csrf
                             {{-- <button type="submit" class="fas fa-trash-alt">
                             </button> --}}
                         </form>
+                        <div class="modal fade" id="modal-default-{{$brand->id}}">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" style="color: white">Detail</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Id:</strong>
+                                                <p style="color: white">{{$brand->id}}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Title:</strong>
+                                                <p style="color: white">{{$brand->title}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Status:</strong>
+                                                <p style="color: white">{{$brand->status}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <strong style="color: white">Image:</strong>
+                                                <img src="{{URL($brand->image)}}" alt="" width="400px" height="200px">
+                                                {{--                                                                        <img src="{{URL('upload/'.request()->segment(2).'/'.$product->image)}}" alt="" width="400px" height="200px">--}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+
                     </td>
                   </tr>
                   @endforeach

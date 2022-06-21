@@ -84,12 +84,63 @@
                         <i class="fas fa-trash-alt">
                         </i>
                       </a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-default-{{$banner->id}}" id="bannerID-{{$banner->id}}" value="{{$banner->id}}">
+                            <i class="fas fa-eye">
+                            </i>
+                        </a>
                         <form method="post" action="{{route('banner.destroy',$banner->id)}}" enctype="multipart/form-data" name="deleteBanner" id="delete-{{$banner->id}}">
                           @method('delete')
                           @csrf
                             {{-- <button type="submit" class="fas fa-trash-alt">
                             </button> --}}
                         </form>
+                        <div class="modal fade" id="modal-default-{{$banner->id}}">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" style="color: white">Detail</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Id:</strong>
+                                                <p style="color: white">{{$banner->id}}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Title:</strong>
+                                                <p style="color: white">{{$banner->title}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Status:</strong>
+                                                <p style="color: white">{{$banner->status}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <strong style="color: white">Discription:</strong>
+                                                <p style="color: white">{!! $banner->description !!}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <strong style="color: white">Image:</strong>
+                                                <img src="{{URL($banner->image)}}" alt="" width="400px" height="200px">
+                                                {{--                                                                        <img src="{{URL('upload/'.request()->segment(2).'/'.$product->image)}}" alt="" width="400px" height="200px">--}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
                     </td>
                   </tr>
                   @endforeach

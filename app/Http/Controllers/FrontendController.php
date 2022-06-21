@@ -16,7 +16,7 @@ class FrontendController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function showLoginForm()
     {
         return view('login');
@@ -41,7 +41,7 @@ class FrontendController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            Session::put('user', $request->email);
+            Session::put('user', Auth::user());
             if(Auth::attempt($credentials, 'role' == 'admin')) {
                 return redirect()->intended('admin')->with('success','Successfully Login');
             }else{

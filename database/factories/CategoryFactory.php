@@ -6,12 +6,13 @@ use App\Models\Category;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(App\Models\Category::class, function (Faker $faker) {
     return [
         //
         'title' => $this->faker->title,
-        'image' => $this->faker->imageURL('100','100'),
-        'is_parent' => $this->faker->randomElement([true, false]),
+        'slug' => $this->faker->unique()->slug,
+//        'image' => $this->faker->imageURL('100','100'),
+        'is_parent' => $this->faker->randomElement([1, 0]),
         'status' => $this->faker->randomElement(['active', 'inactive']),
         'parent_id' => $this->faker->randomElement(Category::pluck('id')->toArray()),
     ];

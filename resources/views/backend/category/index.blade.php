@@ -74,12 +74,60 @@
                         <i class="fas fa-trash-alt">
                         </i>
                       </a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-default-{{$category->id}}" id="catID-{{$category->id}}" value="{{$category->id}}">
+                            <i class="fas fa-eye">
+                            </i>
+                        </a>
                         <form method="post" action="{{route('category.destroy',$category->id)}}" enctype="multipart/form-data" name="deleteCategory" id="delete-{{$category->id}}">
                           @method('delete')
                           @csrf
                             {{-- <button type="submit" class="fas fa-trash-alt">
                             </button> --}}
                         </form>
+                        <div class="modal fade" id="modal-default-{{$category->id}}">
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" style="color: white">Detail</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Id:</strong>
+                                                <p style="color: white">{{$category->id}}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Title:</strong>
+                                                <p style="color: white">{{$category->title}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Is_parent</strong>
+                                                <p style="color: white">{{$category->is_parent == 0 ? 'No': 'Yes'}}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Parent_id:</strong>
+                                                <p style="color: white">{{$category->parent_id}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong style="color: white">Status:</strong>
+                                                <p style="color: white">{{$category->status}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
                     </td>
                   </tr>
                   @endforeach

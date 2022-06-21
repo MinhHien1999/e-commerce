@@ -5,10 +5,12 @@ namespace App\Models;
 use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
     use Sluggable;
+    use SoftDeletes;
 
     public $timestamps = true;
 

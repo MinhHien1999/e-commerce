@@ -44,11 +44,11 @@
                                         <th>id</th>
                                         <th>title</th>
                                         <th>price</th>
-                                        <th>brand_id</th>
-                                        <th>cat_id</th>
-                                        <th>child_cat_id</th>
+                                        <th>brand</th>
+{{--                                        <th>cat_id</th>--}}
+{{--                                        <th>child_cat_id</th>--}}
                                         <th>discount</th>
-                                        <th>description</th>
+{{--                                        <th>description</th>--}}
                                         <th>image</th>
                                         <th>status</th>
                                         <th>action</th>
@@ -56,6 +56,12 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($dataProduct as $product)
+                                        @php
+                                            $productDetail = \App\Models\Product::where('id',$product->id)->first();
+                                            $BrandDetail = \App\Models\Brand::where('id',$product->brand_id)->first();
+                                            $CategoryDetail = \App\Models\Category::where(['id' => $product->cat_id, 'is_parent' => 1])->first();
+                                            $CategoryChildDetail = \App\Models\Category::where(['parent_id' => $product->cat_id, 'is_parent' => 0])->first();
+                                        @endphp
                                         <tr id="item-{{$product->id}}">
                                             <td>
                                                 <p style="color:white">
@@ -69,35 +75,36 @@
                                             </td>
                                             <td>
                                                 <p style="color:white">
-                                                    {{$product->price}}
+                                                    {{number_format($product->price,0,'.',' ').'đ'}}
                                                 </p>
                                             </td>
                                             <td>
                                                 <p style="color:white">
-                                                    {{$product->brand_id}}
+                                                    {{$BrandDetail->title}}
                                                 </p>
                                             </td>
-                                            <td>
-                                                <p style="color:white">
-                                                    {{$product->cat_id}}
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <p style="color:white">
-                                                    {{$product->child_cat_id}}
-                                                </p>
-                                            </td>
+{{--                                            <td>--}}
+{{--                                                <p style="color:white">--}}
+{{--                                                    {{$product->cat_id}}--}}
+{{--                                                </p>--}}
+{{--                                            </td>--}}
+{{--                                            <td>--}}
+{{--                                                <p style="color:white">--}}
+{{--                                                    {{$product->child_cat_id}}--}}
+{{--                                                </p>--}}
+{{--                                            </td>--}}
                                             <td>
                                                 <p style="color:white">
                                                     {{$product->discount}}
                                                 </p>
                                             </td>
-                                            <td>
-                                                <p style="color:white">
-                                                    {!! $product->description !!}
-                                                </p>
-                                            </td>
-                                            <td><img src="{{URL('upload/'.request()->segment(2).'/'.$product->image)}}" alt="" width="15%" height="20%"></td>
+{{--                                            <td>--}}
+{{--                                                <p style="color:white">--}}
+{{--                                                    {!! $product->description !!}--}}
+{{--                                                </p>--}}
+{{--                                            </td>--}}
+                                            <td><img src="{{URL($product->image)}}" alt=""></td>
+{{--                                            <td><img src="{{URL('upload/'.request()->segment(2).'/'.$product->image)}}" alt="" width="15%" height="20%"></td>--}}
                                             <td>
                                                 @if($product->status == 'active')
                                                     <input type="checkbox" checked name="status" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$product->id}}">
@@ -110,8 +117,12 @@
                                                     <i class="fas fa-edit">
                                                     </i>
                                                 </a>
-                                                <a href="javascript:void(0)" name="deleteBanner" value="{{$product->id}}">
+                                                <a href="javascript:void(0)" name="deleteProduct" value="{{$product->id}}">
                                                     <i class="fas fa-trash-alt">
+                                                    </i>
+                                                </a>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-default-{{$product->id}}" id="prodID-{{$product->id}}" value="{{$product->id}}">
+                                                    <i class="fas fa-eye">
                                                     </i>
                                                 </a>
                                                 <form method="post" action="{{route('product.destroy',$product->id)}}" enctype="multipart/form-data" name="deleteProduct" id="delete-{{$product->id}}">
@@ -120,6 +131,88 @@
                                                     {{-- <button type="submit" class="fas fa-trash-alt">
                                                     </button> --}}
                                                 </form>
+                                                <div class="modal fade" id="modal-default-{{$product->id}}">
+                                                    <div class="modal-dialog">
+
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" style="color: white">Detail</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Id:</strong>
+                                                                        <p style="color: white">{{$productDetail->id}}</p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Title:</strong>
+                                                                        <p style="color: white">{{$product->title}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Price:</strong>
+                                                                        <p style="color: white">{{number_format($product->price,0,'.',' ').'đ'}}</p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Quantity:</strong>
+                                                                        <p style="color: white">{{$product->quantity}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Brand:</strong>
+                                                                        <p style="color: white">{{$BrandDetail->title}}</p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Category:</strong>
+                                                                        <p style="color: white">{{$CategoryDetail['title']}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Category Child:</strong>
+                                                                        <p style="color: white">{{$CategoryChildDetail['title']}}</p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Discount:</strong>
+                                                                        <p style="color: white">{{$product->discount}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <strong style="color: white">Status:</strong>
+                                                                        <p style="color: white">{{$product->status}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <strong style="color: white">Discription:</strong>
+                                                                        <p style="color: white">{!! $product->description !!}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <strong style="color: white">Image:</strong>
+                                                                        <img src="{{URL($product->image)}}" alt="" width="400px" height="200px">
+{{--                                                                        <img src="{{URL('upload/'.request()->segment(2).'/'.$product->image)}}" alt="" width="400px" height="200px">--}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+{{--                                                            <div class="modal-footer justify-content-between">--}}
+{{--                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+{{--                                                                <button type="button" class="btn btn-primary">Save changes</button>--}}
+{{--                                                            </div>--}}
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                                <!-- /.modal -->
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -255,7 +348,7 @@
             })
         })
 
-        $('a[name=deleteBanner]').click(function() {
+        $('a[name=deleteProduct]').click(function() {
             var id = $(this).attr('value');
             var form = document.getElementById(`delete-${id}`);
             swal({

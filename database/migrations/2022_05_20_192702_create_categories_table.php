@@ -22,6 +22,7 @@ class CreateCategoriesTable extends Migration
             $table->enum('status',['active','inactive'])->default('inactive');
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('SET NULL');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
