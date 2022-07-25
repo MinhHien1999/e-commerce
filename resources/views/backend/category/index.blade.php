@@ -41,31 +41,31 @@
                 <table id="example1" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>id</th>
-                    <th>title</th>
-                    <th>is_parent</th>
-                    <th>parent_id</th>
-                    <th>status</th>
-                    <th>action</th>
+                    <th style="text-align: center;">id</th>
+                    <th style="text-align: center;">title</th>
+                    <th style="text-align: center;">is_parent</th>
+                    <th style="text-align: center;">parent_id</th>
+                    <th style="text-align: center;">status</th>
+                    <th style="text-align: center;">action</th>
                   </tr>
                   </thead>
                   <tbody>
                   @foreach ($dataCategory as $category)
                   <tr id="item-{{$category->id}}">
-                    <td>{{$category->id}}</td>
-                    <td>
+                    <td style="text-align: center;">{{$category->id}}</td>
+                    <td style="text-align: center;">
                       {{$category->title}}
                     </td>
-                    <td>{{$category->is_parent ? 'yes' : 'no'}}</td>
-                    <td>{{\App\Models\Category::where('id', $category->parent_id)->value('title')}}</td>
-                    <td>
+                    <td style="text-align: center;">{{$category->is_parent ? 'yes' : 'no'}}</td>
+                    <td style="text-align: center;">{{\App\Models\Category::where('id', $category->parent_id)->value('title')}}</td>
+                    <td style="text-align: center;">
                       @if($category->status == 'active')
                         <input type="checkbox" checked name="status" data-size="sm" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$category->id}}">
                       @else
                         <input type="checkbox" name="status" data-size="sm" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$category->id}}">
                       @endif
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                       <a href="{{route('category.edit',$category->id)}}">
                         <i class="fas fa-edit">
                         </i>
@@ -118,7 +118,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <strong style="color: white">Status:</strong>
-                                                <p style="color: white">{{$category->status}}</p>
+                                                <p style="{{$category->status == 'active' ? 'color: #00bc8c': 'color: #e74c3c'}};font-weight:700">{{$category->status}}</p>
                                             </div>
                                         </div>
                                     </div>

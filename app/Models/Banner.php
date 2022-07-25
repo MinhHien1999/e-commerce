@@ -25,4 +25,8 @@ class Banner extends Model
             ]
         ];
     }
+
+    public static function getBanner(){
+        return Banner::where('status','active')->limit(3)->orderBy('id','DESC')->get();
+    }
 }

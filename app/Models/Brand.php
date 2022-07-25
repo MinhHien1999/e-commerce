@@ -26,6 +26,9 @@ class Brand extends Model
             ]
         ];
     }
+    public function product(){
+        return $this->hasMany('App\Models\Product','brand_id','id')->where('status','active');
+    }
 
     public static function getAllBrand(){
         return Brand::orderBy('id', 'DESC')->get();

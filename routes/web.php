@@ -18,7 +18,21 @@ Route::get('/login', 'FrontendController@showLoginForm')->name('login');
 route::post('/register', 'FrontendController@register')->name('submit.register');
 Route::post('/login', 'FrontendController@login')->name('submit.login');
 Route::get('/logout', 'FrontendController@logout')->name('logout');
+Route::get('/cart', 'FrontendController@cart')->name('cart');
+route::get('/', 'FrontendController@index')->name('home');
+route::get('/collections', 'FrontendController@shop')->name('shop');
 
+route::get('/collections/{slug}','FrontendController@productCat')->name('product-cat');
+route::get('/product/{slug}','FrontendController@productDetail')->name('product-detail');
+route::post('/product/search','FrontendController@autoSearch')->name('auto-search');
+route::get('/search','FrontendController@productSearch')->name('product-search');
+
+//Cart
+Route::post('/cart/update', 'CartController@cart')->name('update-cart');
+route::post('/cart/store', 'CartController@store')->name('add-cart');
+route::delete('/cart/delete', 'CartController@delete')->name('delete-cart');
+
+//backend Route
 Route::prefix('admin')->middleware('is_admin')->group(function () {
     //dashboard
     route::get('/', 'AdminController@index')->name('admin');

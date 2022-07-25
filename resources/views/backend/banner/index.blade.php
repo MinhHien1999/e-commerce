@@ -41,41 +41,41 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>id</th>
-                    <th>title</th>
-                    <th>description</th>
-                    <th>image</th>
-                    <th>status</th>
-                    <th>action</th>
+                    <th style="text-align: center;">id</th>
+                    <th style="text-align: center;">title</th>
+                    <th style="text-align: center;">description</th>
+                    <th style="text-align: center;">image</th>
+                    <th style="text-align: center;">status</th>
+                    <th style="text-align: center;">action</th>
                   </tr>
                   </thead>
                   <tbody>
                   @foreach ($dataBanner as $banner)
                   <tr id="item-{{$banner->id}}">
-                    <td>
+                    <td style="text-align: center;">
                         <p style="color:white">
                           {{$banner->id}}
                       </p>
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                       <p style="color:white">
                         {{$banner->title}}
                       </p>
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                       <p style="color:white">
                         {!! $banner->description !!}
                       </p>
                     </td>
-                    <td><img src="{{URL('upload/'.$banner->image)}}" alt="" width="15%" height="20%"></td>
-                    <td>
+                    <td style="text-align: center;"><img src="{{URL('upload/'.$banner->image)}}" alt="" width="15%" height="20%"></td>
+                    <td style="text-align: center;">
                       @if($banner->status == 'active')
                         <input type="checkbox" checked name="status" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$banner->id}}">
                       @else
                         <input type="checkbox" name="status" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$banner->id}}">
                       @endif
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                       <a href="{{route('banner.edit',$banner->id)}}">
                         <i class="fas fa-edit">
                         </i>
@@ -118,7 +118,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <strong style="color: white">Status:</strong>
-                                                <p style="color: white">{{$banner->status}}</p>
+                                                <p style="{{$banner->status == 'active' ? 'color: #00bc8c': 'color: #e74c3c'}};font-weight:700">{{$banner->status}}</p>
                                             </div>
                                         </div>
                                         <div class="row">

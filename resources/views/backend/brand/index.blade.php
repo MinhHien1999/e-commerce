@@ -41,29 +41,29 @@
                 <table id="example1" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>id</th>
-                    <th>title</th>
-                    <th>image</th>
-                    <th>status</th>
-                    <th>action</th>
+                    <th style="text-align: center;">id</th>
+                    <th style="text-align: center;">title</th>
+                    <th style="text-align: center;">image</th>
+                    <th style="text-align: center;">status</th>
+                    <th style="text-align: center;">action</th>
                   </tr>
                   </thead>
                   <tbody>
                   @foreach ($dataBrand as $brand)
                   <tr id="item-{{$brand->id}}">
-                    <td>{{$brand->id}}</td>
-                    <td>
+                    <td style="text-align: center;">{{$brand->id}}</td>
+                    <td style="text-align: center;">
                       {{$brand->title}}
                     </td>
-                    <td><img src="{{URL('upload/'.request()->segment(2).'/'.$brand->image)}}" alt="" width="15%" height="20%"></td>
-                    <td>
+                    <td style="text-align: center;"><img src="{{URL('upload/'.request()->segment(2).'/'.$brand->image)}}" alt="" width="15%" height="20%"></td>
+                    <td style="text-align: center;">
                       @if($brand->status == 'active')
                         <input type="checkbox" checked name="status" data-size="sm" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$brand->id}}">
                       @else
                         <input type="checkbox" name="status" data-size="sm" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$brand->id}}">
                       @endif
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                       <a href="{{route('brand.edit',$brand->id)}}">
                         <i class="fas fa-edit">
                         </i>
@@ -106,7 +106,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <strong style="color: white">Status:</strong>
-                                                <p style="color: white">{{$brand->status}}</p>
+                                                <p style="{{$brand->status == 'active' ? 'color: #00bc8c': 'color: #e74c3c'}};font-weight:700">{{$brand->status}}</p>
                                             </div>
                                         </div>
                                         <div class="row">

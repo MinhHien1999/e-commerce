@@ -50,16 +50,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputTitle">Quantity</label>
+                                        <label for="exampleInputTitle">Stocks</label>
                                         <div class="input-group">
-                                            <input type="number" name="quantity" class="form-control" placeholder="Quantity" value="{{$dataProduct->quantity}}" min="0">
+                                            <input type="number" name="stock" class="form-control" placeholder="stock" value="{{$dataProduct->stock}}" min="0">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputTitle">Discount</label>
                                         <div class="input-group">
-                                            <input type="number" name="discount" class="form-control" placeholder="Discount" value="{{$dataProduct->discount}}" min="0" aria-label="Dollar amount (with dot and two decimal places)">
-                                            <span class="input-group-text">$</span>
+                                            <input type="number" name="discount" class="form-control" placeholder="Discount (Max:100)" value="{{$dataProduct->discount}}" min="0" aria-label="Dollar amount (with dot and two decimal places)">
+                                            <span class="input-group-text">%</span>
                                         </div>
                                     </div>
                                     <div class="form-group" id="parent">

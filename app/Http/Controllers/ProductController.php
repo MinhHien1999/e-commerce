@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $dataProduct = Product::getAllProduct();
-//        dd($dataProduct);
+        // return $dataProduct;
         return view('backend.product.index',compact('dataProduct'));
     }
 
@@ -44,13 +44,13 @@ class ProductController extends Controller
             'image' => 'bail|required|mimes:jpeg,bmp,png',
             'description'=>'bail|string|nullable',
             'price' => 'bail|required|min:0',
+            'stock' => 'bail|required|numeric|min:1',
             'cat_id'=>'bail|required|exists:categories,id',
             'brand_id'=>'bail|nullable|exists:brands,id',
             'child_cat_id'=>'bail|nullable|exists:categories,id',
             'status'=>'bail|required|in:active,inactive',
             'price'=>'bail|required|numeric',
-            'discount'=>'bail|nullable|numeric'
-
+            'discount'=>'bail|nullable|numeric|max:100',
         ]);
         $data = $request->all();
 //         dd($data);
@@ -112,18 +112,22 @@ class ProductController extends Controller
             'image' => 'bail|mimes:jpeg,bmp,png',
             'description'=>'bail|string|nullable',
             'price' => 'bail|required|min:0',
+            'stock' => 'bail|required|numeric|min:1',
             'cat_id'=>'bail|required|exists:categories,id',
             'brand_id'=>'bail|nullable|exists:brands,id',
             'child_cat_id'=>'bail|nullable|exists:categories,id',
             'status'=>'bail|required|in:active,inactive',
             'price'=>'bail|required|numeric',
-            'discount'=>'bail|nullable|numeric'
+            'discount'=>'bail|nullable|numeric|max:100'
         ]);
 //        dd(empty($request->child_cat_id));
         $data = $request->all();
         $product = Product::find($id);
         $cat_child_id = Category::where('parent_id', $request->cat_id)->get();
-//        dd($cat_id);
+//        dd($data);
+        if(empty($request->discount)){
+            $data['discount'] = 0;
+        }
         if(empty($request->child_cat_id))
             $data['child_cat_id'] = null;
         if(count($cat_child_id) == 0){

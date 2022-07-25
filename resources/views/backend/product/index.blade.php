@@ -41,17 +41,17 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>id</th>
-                                        <th>title</th>
-                                        <th>price</th>
-                                        <th>brand</th>
+                                        <th style="text-align: center;">id</th>
+                                        <th style="text-align: center;">title</th>
+                                        <th style="text-align: center;">price</th>
+                                        <th style="text-align: center;">brand</th>
 {{--                                        <th>cat_id</th>--}}
 {{--                                        <th>child_cat_id</th>--}}
-                                        <th>discount</th>
+                                        <th style="text-align: center;">discount</th>
 {{--                                        <th>description</th>--}}
-                                        <th>image</th>
-                                        <th>status</th>
-                                        <th>action</th>
+                                        <th style="text-align: center;">image</th>
+                                        <th style="text-align: center;">status</th>
+                                        <th style="text-align: center;">action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -63,23 +63,23 @@
                                             $CategoryChildDetail = \App\Models\Category::where(['parent_id' => $product->cat_id, 'is_parent' => 0])->first();
                                         @endphp
                                         <tr id="item-{{$product->id}}">
-                                            <td>
-                                                <p style="color:white">
+                                            <td style="text-align: center;">
+                                                <p style="color:white;">
                                                     {{$product->id}}
                                                 </p>
                                             </td>
-                                            <td>
-                                                <p style="color:white">
+                                            <td style="text-align: center;">
+                                                <p style="color:white;">
                                                     {{$product->title}}
                                                 </p>
                                             </td>
-                                            <td>
-                                                <p style="color:white">
+                                            <td style="text-align: center;">
+                                                <p style="color:white;">
                                                     {{number_format($product->price,0,'.',' ').'đ'}}
                                                 </p>
                                             </td>
-                                            <td>
-                                                <p style="color:white">
+                                            <td style="text-align: center;">
+                                                <p style="color:white;">
                                                     {{$BrandDetail->title}}
                                                 </p>
                                             </td>
@@ -93,9 +93,9 @@
 {{--                                                    {{$product->child_cat_id}}--}}
 {{--                                                </p>--}}
 {{--                                            </td>--}}
-                                            <td>
-                                                <p style="color:white">
-                                                    {{$product->discount}}
+                                            <td style="text-align: center;">
+                                                <p style="color:white;">
+                                                    {{$product->discount.'%'}}
                                                 </p>
                                             </td>
 {{--                                            <td>--}}
@@ -103,16 +103,16 @@
 {{--                                                    {!! $product->description !!}--}}
 {{--                                                </p>--}}
 {{--                                            </td>--}}
-                                            <td><img src="{{URL($product->image)}}" alt=""></td>
+                                            <td style="text-align: center;"><img src="{{URL($product->image)}}" alt=""></td>
 {{--                                            <td><img src="{{URL('upload/'.request()->segment(2).'/'.$product->image)}}" alt="" width="15%" height="20%"></td>--}}
-                                            <td>
+                                            <td style="text-align: center;">
                                                 @if($product->status == 'active')
                                                     <input type="checkbox" checked name="status" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$product->id}}">
                                                 @else
                                                     <input type="checkbox" name="status" data-toggle="toggle" data-on="Active" data-off="inactive" data-onstyle="success" data-offstyle="danger" value="{{$product->id}}">
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 <a href="{{route('product.edit',$product->id)}}">
                                                     <i class="fas fa-edit">
                                                     </i>
@@ -155,11 +155,11 @@
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <strong style="color: white">Price:</strong>
-                                                                        <p style="color: white">{{number_format($product->price,0,'.',' ').'đ'}}</p>
+                                                                        <p style="color: white">{{number_format($product->price,0,',','.').'đ'}}</p>
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <strong style="color: white">Quantity:</strong>
-                                                                        <p style="color: white">{{$product->quantity}}</p>
+                                                                        <strong style="color: white">Stock:</strong>
+                                                                        <p style="color: {{$product->stock == 0 ? 'red': 'white'}}; font-weight:700">{{$product->stock == 0 ? 'Out of Stock': $product->stock}}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -179,13 +179,13 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <strong style="color: white">Discount:</strong>
-                                                                        <p style="color: white">{{$product->discount}}</p>
+                                                                        <p style="color: white">{{$product->discount.'%'}}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-6">
                                                                         <strong style="color: white">Status:</strong>
-                                                                        <p style="color: white">{{$product->status}}</p>
+                                                                        <p style="{{$product->status == 'active' ? 'color: #00bc8c': 'color: #e74c3c'}};font-weight:700">{{$product->status}}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -342,7 +342,6 @@
                 success: function(response) {
                     if(response.message){
                         swal(response.message);
-                        // alert(response.message);
                     }
                 }
             })
